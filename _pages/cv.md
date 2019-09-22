@@ -8,8 +8,4 @@ redirect_from:
 ---
 
 
-[View my cv here](http://sozsfness.github.io/files/cv_zikun_chen.pdf)
-
-
-
-{% include base_path %}
+[You can view my cv here](http://sozsfness.github.io/files/cv_zikun_chen.pdf)

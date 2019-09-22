@@ -8,7 +8,7 @@ redirect_from:
 ---
 
 
-[View my cv here](http://academicpages.github.io/files/cv_zikun_chen.pdf)
+[View my cv here](http://sozsfness.github.io/files/cv_zikun_chen.pdf)
 
 
 

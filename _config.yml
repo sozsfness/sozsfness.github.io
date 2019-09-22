@@ -81,13 +81,11 @@ analytics:
 # Site Author
 author:
   name             : "Zikun Chen"
-  avatar           : "profile.png"
+  avatar           : "icon.jpg"
   bio              : "Undergraduate student at University of British Columbia, majoring in computer science and statistics"
-  location         : "Location"
+  location         : "Vancouver, BC, Canada"
   employer         :
-  pubmed           : "https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
-  googlescholar    : "http://yourfullgooglescholarurl.com"
-  email            :
+  email            : "zikun.chen88@gmail.com"
   researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
   uri              :
   bitbucket        :
@@ -109,7 +107,7 @@ author:
   stackoverflow    : # http://stackoverflow.com/users/123456/username
   steam            :
   tumblr           :
-  twitter          : "replacethistwitterhandle"
+  twitter          : 
   vine             :
   weibo            :
   xing             :

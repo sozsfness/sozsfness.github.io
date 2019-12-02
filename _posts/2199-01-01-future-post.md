@@ -8,4 +8,4 @@ tags:
   - category2
 ---
 
-First post on my github website! In the future I'll post stuff involving paper notes, formula derivations(mainly for myself) and project progress etc..:D
+First post on my github website!

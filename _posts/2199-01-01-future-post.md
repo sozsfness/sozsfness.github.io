@@ -22,7 +22,7 @@ Despite the great successes, variational methods have several disadvanages that 
 
 $$ p(\theta|X) \approx q(\phi) = \prod_{i=1}^{n} q_i(\phi _i) $$
 
-Obviously, it can't model every distribution- the fully factorization assumption limits its ability to match complicated true posteriors- e.g., multimodal distributions, which cannot be modelled with basic Gaussians. As a result, we might be optimizing our network at the expense of higher reconstruction errors when approximating the true posterior with mismatching proposed distributions.
+Obviously, it can't model every distribution- the fully factorization assumption limits its ability to match complicated true posteriors, e.g., multimodal distributions, which cannot be modelled with basic Gaussians. As a result, we might be optimizing our network at the expense of higher reconstruction errors when approximating the true posterior with mismatching proposed distributions.
 
 Theoretically, better posterior approximations will result in better performance, so we need to choose a more complex distribution while keeping the good properties of factorized Gaussians: 
 
@@ -37,18 +37,29 @@ The idea of approximating posterior distributions using normalizing flows was fi
 ### How it works
 Given a random variable $$z$$ with density function $q_z(z)$, we can transform it into another random variable $z'$ with the same dimensionality using an invertible mapping $f$ with inverse $f^{-1} = g$. $z'$ has a density function: 
 
-$$ q_{z'}(z') = \frac{dPr(Z' \leqslant z')}{dz'} \\
-      & = \frac{dPr(f(z) \leqslant z')}{dz'} \\
-      & = \frac{dPr(z \leqslant g(z'))}{df(z)} \\
-      & = \frac{dPr(z \leqslant g(z'))}{dz} * \frac{1}{f'(z)} \\
-      & = q_z(g(z')) * |det(\frac{df(z)}{dz})^{-1}|\\
-      & = q_z(z) * |det({\frac{df(z)}{dz}})|^{-1}
- $$
+$$ q_{z'}(z') = \frac{dPr(Z' \leqslant z')}{dz'} $$
 
+Which is equal to:
 
+$$ \frac{dPr(f(z) \leqslant z')}{df(z)} $$
+      
+Applying the inverse mapping, we get:
+
+$$ \frac{dPr(z \leqslant g(z'))}{df(z)} $$
+
+Applying the chain rule,
+
+$$ = \frac{dPr(z \leqslant g(z'))}{dz} * \frac{1}{f'(z)} $$
+
+$$ = q_z(g(z')) * |det(\frac{df(z)}{dz})^{-1}| $$
+      
+$$ = q_z(z) * |det({\frac{df(z)}{dz}})|^{-1} $$
+ 
  The last line implies that we don't need to compute the inverse of our mappings explicitly, which is easier to work with.
 
- from dist to dist
+### Incorporating a normalizing flow into a vanilla VAE
+Now we can improve on a vanilla VAE model by using normalizing flows. In particular, in this scenario we use fully factorized Gaussians, e.g., 
+
 how, loss, some flow methods, applications
 
   1. Invertible linear-time transformations

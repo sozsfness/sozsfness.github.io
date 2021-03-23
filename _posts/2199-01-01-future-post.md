@@ -20,9 +20,14 @@ In contrast to AE, VAE incorporates the idea of variational Bayes and maps the i
 
 Despite the great successes, variational methods have several disadvanages that limit their power in statistical inference. One of these limitations is the choice of q, or more precisely, the class of probability distributions we choose to approximate the true posterior. In a vanilla VAE, fully factorized diagonal Gaussians are used, the core concept of which is :
 
-      $$p(\theta|X) \approx q(\phi) = \prod_{i=1}^{n} q_i(\phi _i)$$
+      $p(\theta|X) \approx q(\phi) = \prod_{i=1}^{n} q_i(\phi _i)$
 
-Obviously, it can't model every distribution- the fully factorization assumption limits its ability to match complicated true posteriors- e.g., multimodal distributions, which cannot be modelled with basic Gaussians.
+Obviously, it can't model every distribution- the fully factorization assumption limits its ability to match complicated true posteriors- e.g., multimodal distributions, which cannot be modelled with basic Gaussians. As a result, we might be optimizing our network at the expense of higher reconstruction errors when approximating the true posterior with mismatching proposed distributions.
+
+Theoretically, better posterior approximations will result in better performance. How to choose a more complex distribution? We want it to also have the good properties of factorized Gaussians: 
+
+  1. computationally efficient to differentiate
+  2. easy to sample mini batches from
 
 ## VAE with normalizing Flows: posterior approximations with controllable complexity at run time
  from dist to dist

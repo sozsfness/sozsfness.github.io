@@ -41,13 +41,17 @@ $$ q_{z'}(z') = \frac{dPr(Z' \leqslant z')}{dz'} \\
       & = \frac{dPr(f(z) \leqslant z')}{dz'} \\
       & = \frac{dPr(z \leqslant g(z'))}{df(z)} \\
       & = \frac{dPr(z \leqslant g(z'))}{dz} * \frac{1}{f'(z)} \\
-      & = q_z(g(z')) * \begin{vmatrix} 
-      det({\frac{df(z)}{dz}}^{-1})
-      \end{vmatrix} \\
-      & = q_z(z) * {\begin{vmatrix} 
+      & = q_z(g(z')) * \begin{bmatrix} 
+      det(\frac{df(z)}{dz})^{-1}
+      \end{bmatrix} \\
+      & = q_z(z) * {\begin{bmatrix} 
       det({\frac{df(z)}{dz}})
-      \end{vmatrix}}^{-1}
+      \end{bmatrix}}^{-1}
  $$
+
+ $$ q_z(z) * {\begin{bmatrix} 
+      det({\frac{df(z)}{dz}})
+      \end{bmatrix} $$
 
  The last line implies that we don't need to compute the inverse of our mappings explicitly, which is easier to work with.
 

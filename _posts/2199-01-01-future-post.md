@@ -24,12 +24,33 @@ $$ p(\theta|X) \approx q(\phi) = \prod_{i=1}^{n} q_i(\phi _i) $$
 
 Obviously, it can't model every distribution- the fully factorization assumption limits its ability to match complicated true posteriors- e.g., multimodal distributions, which cannot be modelled with basic Gaussians. As a result, we might be optimizing our network at the expense of higher reconstruction errors when approximating the true posterior with mismatching proposed distributions.
 
-Theoretically, better posterior approximations will result in better performance. How to choose a more complex distribution? We want it to also have the good properties of factorized Gaussians: 
+Theoretically, better posterior approximations will result in better performance, so we need to choose a more complex distribution while keeping the good properties of factorized Gaussians: 
 
   1. computationally efficient to differentiate
   2. easy to sample mini batches from
 
-## VAE with normalizing Flows: posterior approximations with controllable complexity at run time
+
+## Variational inference with normalizing Flows: posterior approximations with controllable complexity at run time
+
+The idea of approximating posterior distributions using normalizing flows was fist introduced by Rezende & Mohamed in 2015. In short, it transforms a probability density through a sequence of invertible mappings, and the density "flows" through the sequence, resulting in a more flexible distribution that hopelly could better match the true posterior.
+
+### How it works
+Given a random variable $$z$$ with density function $q_z(z)$, we can transform it into another random variable $z'$ with the same dimensionality using an invertible mapping $f$ with inverse $f^{-1} = g$. $z'$ has a density function: 
+
+$$ q_{z'}(z') = \frac{dPr(Z' \leqslant z')}{dz'} \\
+      & = \frac{dPr(f(z) \leqslant z')}{dz'} \\
+      & = \frac{dPr(z \leqslant g(z'))}{df(z)} \\
+      & = \frac{dPr(z \leqslant g(z'))}{dz} * \frac{1}{f'(z)} \\
+      & = q_z(g(z')) * \begin{vmatrix} 
+      det({\frac{df(z)}{dz}}^{-1})
+      \end{vmatrix} \\
+      & = q_z(z) * {\begin{vmatrix} 
+      det({\frac{df(z)}{dz}})
+      \end{vmatrix}}^{-1}
+ $$
+
+ The last line implies that we don't need to compute the inverse of our mappings explicitly, which is easier to work with.
+
  from dist to dist
 how, loss, some flow methods, applications
 

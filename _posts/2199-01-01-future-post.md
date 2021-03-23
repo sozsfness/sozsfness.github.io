@@ -9,10 +9,10 @@ tags:
 ## Summary
 	The simple families of posterior approximations employed by many Variational Autoencoder (VAE) applications could be too limited to model the true posterior distributions properly. In this post we will explore one way to overcome this limitation- approximation through a normalizing flow.
 
-## Why is VAE so popular?
+## From AE to VAE: Variational Bayes
 
 Before the idea of VAE was first introduced by Kingma & Welling in 2014, Autoencoder(AE) was promoted by Hinton & Salakhutdinov in 2006. AE is a neural network capable of compressing inputs (usually with high dimensionality) into compact latent representations, and reconstructing the original input using such representations. 
-In contrast to AE, VAE maps the input into a distribution q instead of a vector with no extra constraints. Approximating the posterior p(z|x) with q(z|x), VAE becomes a powerful generative model as the decoder is optimized to recover latent representations from a probability distribution from which we can sample data at inference time, rather than discrete, possibly non-interpolatable vectors.
+In contrast to AE, VAE incorporates the idea of variational Bayes and maps the input into a distribution q instead of a vector. Approximating the posterior p(z|x) with q(z|x), VAE becomes a powerful generative model: the decoder is now optimized to recover latent representations from a probability distribution from which we can sample data at inference time.
 
 ## One limitation of VAE: choice of q
 

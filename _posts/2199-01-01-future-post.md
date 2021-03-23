@@ -6,8 +6,10 @@ tags:
   - Variational Autoencoder
   - Normalizing Flows
 ---
+
+
 ## Summary
-	The simple families of posterior approximations employed by many Variational Autoencoder (VAE) applications could be too limited to model the true posterior distributions properly. In this post we will explore one way to overcome this limitation- approximation through a normalizing flow.
+The simple families of posterior approximations employed by many Variational Autoencoder (VAE) applications could be too limited to model the true posterior distributions properly. In this post we will explore one way to overcome this limitation- approximation through a normalizing flow.
 
 ## From AE to VAE: Variational Bayes
 

@@ -60,7 +60,7 @@ $$ = q_z(z) * |det({\frac{df(z)}{dz}})|^{-1} $$
 ### Incorporating a normalizing flow into a vanilla VAE
 To see how it work in practice, let's start with a simple posterior approximation- fully factorized Gaussians used in vanilla VAEs:
 
-$ p(\theta|X) \approx q(\phi) = \prod_{i=1}^{n} q_i(\phi_i) $, where $ q_i(\phi_i) \sim N(\mu_i, \sigma_i) $ i.i.d. for all $i$s.
+$$ p(\theta|X) \approx q(\phi) = \prod_{i=1}^{n} q_i(\phi_i) $$, where $$ q_i(\phi_i) \sim N(\mu_i, \sigma_i) $$ i.i.d. for all $i$s.
 
 Now, we will apply a series of invertible transformations $f_t$s with sequence length T.
 
@@ -68,13 +68,13 @@ $ z_0 \sim q(\phi) $, $ z_t = f_t(z_{t-1}) \ \forall t=1...T $
 
 For simplicity, we'll use log expressions onwards. Recall from derivations above that after applying transformation f to z, log of the density function for the new variable becomes:
 
-$log(q_z(z)) - log(|det({\frac{df(z)}{dz}})|) $. 
+$$ log(q_z(z)) - log(|det({\frac{df(z)}{dz}})|) $$. 
 
 So after applying T transformations, the log density of the final variable becomes:
 
-$$log(q_{\phi}(z)) - \sum_{t=1}^{T} log(|det({\frac{df_t(z)}{dz}})|) $$
+$$ log(q_{\phi}(z)) - \sum_{t=1}^{T} log(|det({\frac{df_t(z)}{dz}})|) $$
 
-Note that the above function is differentiable and does not require computation of the inverse functions explicitly. Moreover, since the original density $q(\phi)$ remains unchanged, we can still sample from a known Gaussian while being able to model more complex posteriors. The best part is that we don't need to modify our loss functions, as the KL divergence we calculate is still $D_KL(q(\phi)|p(\theta)) $.
+Note that the above function is differentiable and does not require computation of the inverse functions explicitly. Moreover, since the original density $q(\phi)$ remains unchanged, we can still sample from a known Gaussian while being able to model more complex posteriors. The best part is that we don't need to modify our loss functions, as the KL divergence we calculate is still $$ D_KL(q(\phi)|p(\theta)) $$.
 
   1. Invertible linear-time transformations
   2. Autoregressive flows

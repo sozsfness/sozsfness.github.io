@@ -13,7 +13,7 @@ The simple families of posterior approximations employed by many Variational Aut
 
 ## From AE to VAE: Variational Bayes
 
-Before the idea of VAE was first introduced by Kingma & Welling in 2014, Autoencoder (AE) was promoted by Hinton & Salakhutdinov in 2006. AE is a neural network capable of compressing inputs (usually with high dimensionality) into compact latent representations, and reconstructing the original input using such representations. 
+Before the idea of VAE was first introduced by [Kingma & Welling in 2014](https://arxiv.org/abs/1312.6114), Autoencoder (AE) was promoted by [Hinton & Salakhutdinov in 2006](https://www.cs.toronto.edu/~hinton/science.pdf). AE is a neural network capable of compressing inputs (usually with high dimensionality) into compact latent representations, and reconstructing the original input using such representations. 
 In contrast to AE, VAE incorporates the idea of variational Bayes and maps the input into a distribution q instead of a vector. Approximating the posterior p(z|x) with q(z|x), VAE becomes a powerful generative model: the decoder is now optimized to recover latent representations from a probability distribution from which we can sample data at inference time.
 
 ## One limitation of VAE: choice of q
@@ -32,7 +32,7 @@ Theoretically, better posterior approximations will result in better performance
 
 ## Variational inference with normalizing Flows: posterior approximations with controllable complexity at run time
 
-The idea of approximating posterior distributions using normalizing flows was fist introduced by Rezende & Mohamed in 2015. In short, it transforms a probability density through a sequence of invertible mappings, and the density "flows" through the sequence, resulting in a more flexible distribution that hopelly could better match the true posterior.
+The idea of approximating posterior distributions using normalizing flows was fist introduced by [Rezende & Mohamed in 2015](https://arxiv.org/abs/1505.05770). In short, it transforms a probability density through a sequence of invertible mappings, and the density "flows" through the sequence, resulting in a more flexible distribution that hopelly could better match the true posterior.
 
 ### How it works
 Given a random variable $$z$$ with density function $q_z(z)$, we can transform it into another random variable $z'$ with the same dimensionality using an invertible mapping $f$ with inverse $f^{-1} = g$. $z'$ has a density function: 
@@ -91,11 +91,28 @@ where $w ,\ u \in \mathbf{R}^D$ , $b \in \mathbf{R}$ are the learnable parameter
 
 $$det(|\frac{df(z)}{dz}|) = |det(\mathbf{I} + uw^T h'(w^T z+b)^T)|$$
 
+Using the matrix determinant lemma, we get:
 
-### Autoregressive flows
+$$|det(\mathbf{I} + uw^T h'(w^T z+b)^T)| = |1 + w^T h'(w^T z+b)^T u|$$
 
-### Glow: generative flow with invertible 1x1 convolutions
+Therefore, applying a sequence of fuch $f$s, the density function for our new random variable becomes:
+
+$ z_0 \sim q(\phi) $, $ z_t = f_t(z_{t-1}) \ \forall t=1...T $
+
+$$ log({q_T}(z_T)) = log(q_{\phi}(z)) - \sum_{t=1}^{T} log(|1 + {w_t}^T h'({w_t}^T z_t+b_t)^T u_t|) $$
 
 ## Conclusion
+Learning transformations of simple density functions, e.g., fully factorized Gaussians, could help the existing variational inference approaches to model complex true posteriors more precisely. Meanwhile, it's straightforward to combine VAEs with normalizing flows, as the transformation is done in the latent space with the density of the simple approximation distribution flowing through the sequence, so stochastic backpropagations and monte carlo sampling can still be used as they are in vanilla VAEs. 
+
+There are more types of flows that allow for different charasteristics of posteriors, i.e., the Hamiltonian flow, and I hope to explore them in future posts.
 
 ## References
+Rezende, Danilo, and Shakir Mohamed. "Variational inference with normalizing flows." International Conference on Machine Learning. PMLR, 2015.
+
+Salimans, Tim, Diederik Kingma, and Max Welling. "Markov chain monte carlo and variational inference: Bridging the gap." International Conference on Machine Learning. PMLR, 2015. (section 5 for Hamiltonian variational inference)
+
+Dinh, Laurent, David Krueger, and Yoshua Bengio. "Nice: Non-linear independent components estimation." arXiv preprint arXiv:1410.8516 (2014).
+
+Kingma, Diederik P., and Max Welling. "Auto-encoding variational bayes." arXiv preprint arXiv:1312.6114 (2013).
+
+Hinton, Geoffrey E., and Ruslan R. Salakhutdinov. "Reducing the dimensionality of data with neural networks." science 313.5786 (2006): 504-507.

@@ -60,7 +60,9 @@ $$ = q_z(z) * |det({\frac{df(z)}{dz}})|^{-1} $$
 ### Incorporating a normalizing flow into a vanilla VAE
 To see how it work in practice, let's start with a simple posterior approximation- fully factorized Gaussians used in vanilla VAEs:
 
-$$ p(\theta|X) \approx q(\phi) = \prod_{i=1}^{n} q_i(\phi_i) $$, where $$ q_i(\phi_i) \sim N(\mu_i, \sigma_i) $$ i.i.d. for all $i$s.
+$ p(\theta|X) \approx q(\phi) = \prod_{i=1}^{n} q_i(\phi_i) $
+ 
+where $ q_i(\phi_i) \sim N(\mu_i, \sigma_i) $ i.i.d. for all i.
 
 Now, we will apply a series of invertible transformations $f_t$s with sequence length T.
 

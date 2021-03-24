@@ -78,6 +78,8 @@ $$ log(q_{\phi}(z)) - \sum_{t=1}^{T} log(|det({\frac{df_t(z)}{dz}})|) $$
 
 Note that the above function is differentiable and does not require computation of the inverse functions explicitly. Moreover, since the original density $q(\phi)$ remains unchanged, we can still sample from a known Gaussian while being able to model more complex posteriors. The best part is that we don't need to modify our loss functions, as the KL divergence we calculate is still between $q(\phi)$ and a known Gaussian. 
 
+### So what normalizing flow should we use?
+There are two types of flows: infinitesimal and finite. A infinitesimal flow is a flow with length that tends to infinity. In this case, it is not described as a sequence of transformations, but as a partial differential equation that shows how the initial density function evolves over time. In this post, we will be focusing on the finite flows as they are more straightforward and have been introduced in the example above. 
   1. Invertible linear-time transformations
   2. Autoregressive flows
   3. Glow: generative flow with invertible 1x1 convolutions

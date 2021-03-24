@@ -104,6 +104,7 @@ Applying T invertible linear-time transformations $f_t$s, the density function f
 $$ log({q_T}(z_T)) = log(q_{\phi}(z_0)) - \sum_{t=1}^{T} log(|1 + {w_t}^T h'({w_t}^T z_{t-1}+b_t)^T u_t|) $$
 
 ## Conclusion
+
 Learning transformations of simple density functions, e.g., fully factorized Gaussians, could help the existing variational inference approaches to model complex true posteriors more precisely. Meanwhile, it's straightforward to combine VAEs with normalizing flows, as the transformation is done in the latent space with the density of the simple approximation distribution flowing through the sequence, so stochastic backpropagations and monte carlo sampling can still be used as they are in vanilla VAEs. 
 
 There are more types of flows that allow for different charasteristics of posteriors, i.e., the Hamiltonian flow, and I hope to explore them in future posts.

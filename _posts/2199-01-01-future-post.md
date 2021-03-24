@@ -62,7 +62,7 @@ To see how it work in practice, let's start with a simple posterior approximatio
 
 $$ p(\theta|X) \approx q(\phi) = \prod_{i=1}^{n} {q_i}(\phi_i) $$
  
-where $ {q_i}(\phi_i) \sim N(\mu_i, \sigma_i) $ i.i.d. for all i.
+where $ {q_i}(\phi_i)$ follows $ N(\mu_i, \sigma_i) $ i.i.d. for all i.
 
 Now, we will apply a series of invertible transformations $f_t$s with sequence length T.
 
@@ -76,7 +76,7 @@ So after applying T transformations, the log density of the final variable becom
 
 $$ log(q_{\phi}(z)) - \sum_{t=1}^{T} log(|det({\frac{df_t(z)}{dz}})|) $$
 
-Note that the above function is differentiable and does not require computation of the inverse functions explicitly. Moreover, since the original density $q(\phi)$ remains unchanged, we can still sample from a known Gaussian while being able to model more complex posteriors. The best part is that we don't need to modify our loss functions, as the KL divergence we calculate is still $$ D_KL(q(\phi)|p(\theta)) $$
+Note that the above function is differentiable and does not require computation of the inverse functions explicitly. Moreover, since the original density $q(\phi)$ remains unchanged, we can still sample from a known Gaussian while being able to model more complex posteriors. The best part is that we don't need to modify our loss functions, as the KL divergence we calculate is still between $q(\phi)$ and a known Gaussian. 
 
   1. Invertible linear-time transformations
   2. Autoregressive flows

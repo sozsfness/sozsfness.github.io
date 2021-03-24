@@ -89,7 +89,7 @@ $$ f(z) = z\ +\ u*h(w^T z + b) $$
 
 where $w ,\ u \in \mathbf{R}^D$ , $b \in \mathbf{R}$ are the learnable parameters and $h$ is a smooth non-linearity with derivative $h'$ .
 
-$$det(|\frac{df(z)}{dz}|) = |det(\mathbf{I} + uw^T h'(w^T z+b)^T)|$$
+$$det(|\frac{\partial f(z)}{\partial z}|) = |det(\mathbf{I} + uw^T h'(w^T z+b)^T)|$$
 
 Using the matrix determinant lemma, we get:
 
@@ -101,7 +101,7 @@ $ z_0 \sim q(\phi) $, $ z_t = f_t(z_{t-1}) \ \forall t=1...T $
 
 Applying T invertible linear-time transformations $f_t$s, the density function for our new random variable becomes:
 
-$$ log({q_T}(z_T)) = log(q_{\phi}(z)) - \sum_{t=1}^{T} log(|1 + {w_t}^T h'({w_t}^T z_{t-1}+b_t)^T u_t|) $$
+$$ log({q_T}(z_T)) = log(q_{\phi}(z_0)) - \sum_{t=1}^{T} log(|1 + {w_t}^T h'({w_t}^T z_{t-1}+b_t)^T u_t|) $$
 
 ## Conclusion
 Learning transformations of simple density functions, e.g., fully factorized Gaussians, could help the existing variational inference approaches to model complex true posteriors more precisely. Meanwhile, it's straightforward to combine VAEs with normalizing flows, as the transformation is done in the latent space with the density of the simple approximation distribution flowing through the sequence, so stochastic backpropagations and monte carlo sampling can still be used as they are in vanilla VAEs. 

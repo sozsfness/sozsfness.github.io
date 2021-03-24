@@ -80,19 +80,21 @@ Note that the above function is differentiable and does not require computation 
 
 ### So what normalizing flow should we use?
 There are two types of flows: infinitesimal and finite. A infinitesimal flow is a flow with length that tends to infinity. In this case, it is not described as a sequence of transformations, but as a partial differential equation that shows how the initial density function evolves over time. In this post, we will be focusing on the finite flows as they are more straightforward and have been introduced in the example above. 
-  1. Invertible linear-time transformations
 
-    This family of transformation takes the form:
+### Invertible linear-time transformations
 
-    $$ f(z) = z\ +\ u*h(w^T z + b) $$
+This family of transformation takes the form:
 
-    where $w ,\ u \in \mathbf{R}^D$ , $b \in \mathbf{R}$ are the learnable parameters and $h$ is a smooth non-linearity with derivative $h'$ .
+$$ f(z) = z\ +\ u*h(w^T z + b) $$
 
-    $$det(|\frac{df(z)}{dz}|) = |det(\mathbf{I} + uw^T h'(w^T z+b)^T)|$$
+where $w ,\ u \in \mathbf{R}^D$ , $b \in \mathbf{R}$ are the learnable parameters and $h$ is a smooth non-linearity with derivative $h'$ .
+
+$$det(|\frac{df(z)}{dz}|) = |det(\mathbf{I} + uw^T h'(w^T z+b)^T)|$$
 
 
-  2. Autoregressive flows
-  3. Glow: generative flow with invertible 1x1 convolutions
+### Autoregressive flows
+
+### Glow: generative flow with invertible 1x1 convolutions
 
 ## Conclusion
 

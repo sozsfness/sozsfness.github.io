@@ -32,28 +32,28 @@ Theoretically, better posterior approximations will result in better performance
 
 ## Variational inference with normalizing Flows: posterior approximations with controllable complexity at run time
 
-The idea of approximating posterior distributions using normalizing flows was fist introduced by [Rezende & Mohamed in 2015](https://arxiv.org/abs/1505.05770). In short, it transforms a probability density through a sequence of invertible mappings, and the density "flows" through the sequence, resulting in a more flexible distribution that hopelly could better match the true posterior.
+The idea of approximating posterior distributions using normalizing flows was fist introduced by [Rezende & Mohamed in 2015](https://arxiv.org/abs/1505.05770). In short, it transforms a probability density through a sequence of invertible mappings, and the density "flows" through the sequence, resulting in a more flexible distribution that hopefully could better match the true posterior.
 
 ### How it works
 Given a random variable $$z$$ with density function $q_z(z)$, we can transform it into another random variable $z'$ with the same dimensionality using an invertible mapping $f$ with inverse $f^{-1} = g$. $z'$ has a density function: 
 
-$$ q_{z'}(z') = \frac{dPr(Z' \leqslant z')}{dz'} $$
+$$ q_{z'}(z') = \frac{\partial Pr(Z' \leqslant z')}{\partial z'} $$
 
 Which is equal to:
 
-$$ \frac{dPr(f(z) \leqslant z')}{df(z)} $$
+$$ \frac{\partial Pr(f(z) \leqslant z')}{\partial f(z)} $$
       
 Applying the inverse mapping, we get:
 
-$$ \frac{dPr(z \leqslant g(z'))}{df(z)} $$
+$$ \frac{\partial Pr(z \leqslant g(z'))}{\partial f(z)} $$
 
 Applying the chain rule,
 
-$$ = \frac{dPr(z \leqslant g(z'))}{dz} * \frac{1}{f'(z)} $$
+$$ = \frac{\partial Pr(z \leqslant g(z'))}{\partial z} * \frac{1}{f'(z)} $$
 
-$$ = q_z(g(z')) * |det(\frac{df(z)}{dz})^{-1}| $$
+$$ = q_z(g(z')) * |det(\frac{\partial f(z)}{\partial z})^{-1}| $$
       
-$$ = q_z(z) * |det({\frac{df(z)}{dz}})|^{-1} $$
+$$ = q_z(z) * |det({\frac{\partial f(z)}{\partial z}})|^{-1} $$
  
  The last line implies that we don't need to compute the inverse of our mappings explicitly, which is easier to work with.
 
@@ -70,11 +70,11 @@ $ z_0 \sim q(\phi) $, $ z_t = f_t(z_{t-1}) \ \forall t=1...T $
 
 For simplicity, we'll use log expressions onwards. Recall from derivations above that after applying transformation f to z, log of the density function for the new variable becomes:
 
-$$ log(q_z(z)) - log(|det({\frac{df(z)}{dz}})|) $$
+$$ log(q_z(z)) - log(|det({\frac{\partial f(z)}{\partial z}})|) $$
 
 So after applying T transformations, the log density of the final variable becomes:
 
-$$ log(q_{\phi}(z)) - \sum_{t=1}^{T} log(|det({\frac{df_t(z)}{dz}})|) $$
+$$log({q_T}(z_T)) = log(q_{\phi}(z_0)) - \sum_{t=1}^{T} log(|det({\frac{\partial f_t(z_{t-1})}{\partial z_{t-1}}})|) $$
 
 Note that the above function is differentiable and does not require computation of the inverse functions explicitly. Moreover, since the original density $q(\phi)$ remains unchanged, we can still sample from a known Gaussian while being able to model more complex posteriors. The best part is that we don't need to modify our loss functions, as the KL divergence we calculate is still between $q(\phi)$ and a known Gaussian. 
 
@@ -95,11 +95,13 @@ Using the matrix determinant lemma, we get:
 
 $$|det(\mathbf{I} + uw^T h'(w^T z+b)^T)| = |1 + w^T h'(w^T z+b)^T u|$$
 
-Therefore, applying a sequence of fuch $f$s, the density function for our new random variable becomes:
+Therefore, starting with a fully factorized Gaussian: 
 
 $ z_0 \sim q(\phi) $, $ z_t = f_t(z_{t-1}) \ \forall t=1...T $
 
-$$ log({q_T}(z_T)) = log(q_{\phi}(z)) - \sum_{t=1}^{T} log(|1 + {w_t}^T h'({w_t}^T z_t+b_t)^T u_t|) $$
+Applying T invertible linear-time transformations $f_t$s, the density function for our new random variable becomes:
+
+$$ log({q_T}(z_T)) = log(q_{\phi}(z)) - \sum_{t=1}^{T} log(|1 + {w_t}^T h'({w_t}^T z_{t-1}+b_t)^T u_t|) $$
 
 ## Conclusion
 Learning transformations of simple density functions, e.g., fully factorized Gaussians, could help the existing variational inference approaches to model complex true posteriors more precisely. Meanwhile, it's straightforward to combine VAEs with normalizing flows, as the transformation is done in the latent space with the density of the simple approximation distribution flowing through the sequence, so stochastic backpropagations and monte carlo sampling can still be used as they are in vanilla VAEs. 
